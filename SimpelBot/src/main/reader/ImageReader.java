@@ -1,4 +1,4 @@
-package reader;
+package main.reader;
 
 import java.awt.AWTException;
 import java.awt.Color;

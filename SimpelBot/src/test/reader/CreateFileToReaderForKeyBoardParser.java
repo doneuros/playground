@@ -1,4 +1,4 @@
-package reader;
+package test.reader;
 
 import static org.junit.Assert.*;
 
@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import main.reader.ParseKeyBoardInput;
 import org.junit.Test;
 
 public class CreateFileToReaderForKeyBoardParser {

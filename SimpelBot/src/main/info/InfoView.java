@@ -1,4 +1,4 @@
-package info;
+package main.info;
 
 import java.awt.TextArea;
 

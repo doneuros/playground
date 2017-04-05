@@ -1,11 +1,17 @@
-package info;
+package main.info;
 
-import java.awt.MouseInfo;
-import java.awt.Toolkit;
+import lc.kra.system.mouse.event.GlobalMouseEvent;
+import main.writer.Action;
+
+import java.awt.*;
+import java.awt.event.InputEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class Recorder {
 
@@ -19,7 +25,8 @@ public class Recorder {
 	private File save;
 	private BufferedWriter writer;
 	private static Recorder r=null;
-	
+	private ArrayList<Action> actions = new ArrayList<Action>();
+	private long time = Long.MAX_VALUE;
 	private Recorder() throws IOException{
 		save = new File("RecordedMouseMovment.txt");
 		writer = new BufferedWriter(new FileWriter(save));
@@ -36,9 +43,25 @@ public class Recorder {
 		
 		return r;
 	}
+
+	public void startActions(Robot robot){
+		try {
+			Action.PerformActions(actions, robot);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 	
-	
-	
+	public void addAction(Integer event){
+		long pause = 0;
+		if(time!=Long.MAX_VALUE){
+			pause = System.currentTimeMillis()-time;
+		}
+		time = System.currentTimeMillis();
+		actions.add(new Action(getMouseX(),getMouseY(),event,pause));
+	}
+
+
 	
 	public int getMouseX() {
 		mouseX = MouseInfo.getPointerInfo().getLocation().x;
@@ -94,8 +117,9 @@ public class Recorder {
 				+ getScreenHight() + ",\n getSceenWidth()=" + getSceenWidth() + ",\n getProgrammRunning()="
 				+ getProgrammRunning() + ",\n getAction()=" + getAction() + "]";
 	}
-	
 
 
-	
+	public void deleteLastAction() {
+		actions.remove(action.length()-1);
+	}
 }
