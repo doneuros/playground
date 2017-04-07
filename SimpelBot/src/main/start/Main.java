@@ -24,14 +24,13 @@ import main.reader.MouseReader;
 
 public class Main {
 
-	public static void main(String[] args) throws AWTException, InterruptedException {
-        Robot r = new Robot();
+	public static void main(String[] args) throws InterruptedException {
         MouseReader reader = new MouseReader(Recorder.getInstance());
         System.out.println("Recording startet");
         Scanner sc = new Scanner(System.in);
         String line = "";
         while(true){
-            System.out.println("If you finish enter 1 for retry 0");
+            System.out.println("If you finish enter: 1 For retry enter: 0");
             reader.startMouseListener();
             line = sc.nextLine();
             System.out.println(line);
@@ -43,12 +42,10 @@ public class Main {
                 reader.endRecording();
             }
         }
-        System.out.print("Enter time to start");
-        int i = sc.nextInt();//5min = 300 000
-        while (true) {
-            Thread.sleep(i);
-            System.out.print("Actions startet");
-            Recorder.getInstance().startActions(r);
+        try {
+            performRecording();
+        } catch (AWTException e) {
+            e.printStackTrace();
         }
 
      /*
@@ -66,6 +63,18 @@ public class Main {
 		}*/
 		//imageEditing();
 	}
+
+    public static void performRecording() throws InterruptedException, AWTException {
+        Scanner sc = new Scanner(System.in);
+        Robot r = new Robot();
+        System.out.print("Enter time to start");
+        int i = sc.nextInt();//5min = 5
+        while (true) {
+            Thread.sleep(i*1000*60);
+            System.out.print("Actions startet");
+            Recorder.getInstance().startActions(r);
+        }
+    }
 }
 
 
